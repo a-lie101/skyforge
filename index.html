@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sky Forge — Strong Minds. Safe Skies.</title>
+  <meta name="description" content="Sky Forge is a pilot-first community providing training resources, career tools, and completely anonymous mental & physical health support for pilots." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <canvas id="bg" class="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="top">
+    <a class="brand" href="#top" aria-label="Sky Forge home">
+      <span class="brand__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5l8 2.5z"/></svg>
+      </span>
+      <span class="brand__name">Sky Forge</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn--signin" href="#contact">Sign in</a>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="container hero__inner">
+      <p class="hero__eyebrow">
+        <span class="hero__eyebrow-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5l8 2.5z"/></svg>
+        </span>
+        Pilot-first community &amp; wellness
+      </p>
+      <h1 class="hero__brand">Sky Forge</h1>
+      <p class="hero__tagline">Strong Minds. Safe Skies.</p>
+      <p class="hero__lede">
+        Training resources, career tools, and completely anonymous mental
+        &amp; physical health support — built for pilots, by pilots.
+      </p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="#contact">Get anonymous support</a>
+        <a class="btn btn--ghost" href="#about">Explore Sky Forge</a>
+      </div>
+    </div>
+    <a class="hero__scroll" href="#about" aria-label="Scroll to learn more">
+      <span>Scroll</span>
+      <span class="hero__scroll-line" aria-hidden="true"></span>
+    </a>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="about" id="about">
+    <div class="container about__grid">
+      <div class="card card--about">
+        <h2 class="card__title">What is<br />Sky Forge</h2>
+        <p class="card__body">
+          A trusted community for pilots, providing essential training resources,
+          career tools, and now, completely anonymous mental &amp; physical health support.
+        </p>
+      </div>
+      <div class="about__media">
+        <div class="device device--laptop" aria-hidden="true">
+          <div class="device__screen"></div>
+          <div class="device__base"></div>
+          <div class="device__phone">
+            <span class="device__phone-logo">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5l8 2.5z"/></svg>
+              SKY FORGE
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="features" id="features">
+    <div class="container features__grid">
+      <h2 class="section-title features__title">Features</h2>
+      <div class="card card--features">
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.2"/><path d="M5 19c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></svg>
+          </span>
+          <div class="feature__text">
+            <h3>Community</h3>
+            <p><strong>Community Resources</strong> — Training materials, infographics, and career support for pilots of all experience levels.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg>
+          </span>
+          <div class="feature__text">
+            <h3>Accessible</h3>
+            <p><strong>Anonymous Wellness App</strong> — Confidential surveys and forms for mental health, stress, fatigue, and physical well-being.</p>
+          </div>
+        </div>
+        <div class="feature">
+          <span class="feature__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v5c0 4.4-3 8.2-7 9-4-0.8-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </span>
+          <div class="feature__text">
+            <h3>Secure &amp; safe</h3>
+            <p><strong>Secure Bridge to Experts</strong> — We proof submissions for anonymity and connect you to aviation medical professionals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REVIEWS ===================== -->
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <h2 class="section-title">Reviews</h2>
+      <div class="reviews__grid">
+        <figure class="card card--review">
+          <div class="review__head">
+            <span class="avatar avatar--a" aria-hidden="true"></span>
+            <figcaption class="review__name">Isla</figcaption>
+          </div>
+          <blockquote>Testimonials are short quotes from people who love your brand. It's a great way to convince customers to try your services.</blockquote>
+        </figure>
+        <figure class="card card--review">
+          <div class="review__head">
+            <span class="avatar avatar--b" aria-hidden="true"></span>
+            <figcaption class="review__name">Mason</figcaption>
+          </div>
+          <blockquote>Testimonials are short quotes from people who love your brand. It's a great way to convince customers to try your services.</blockquote>
+        </figure>
+        <figure class="card card--review">
+          <div class="review__head">
+            <span class="avatar avatar--c" aria-hidden="true"></span>
+            <figcaption class="review__name">Jonah</figcaption>
+          </div>
+          <blockquote>Testimonials are short quotes from people who love your brand. It's a great way to convince customers to try your services.</blockquote>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MEET THE MAKERS ===================== -->
+  <section class="makers" id="makers">
+    <div class="container makers__grid">
+      <div class="makers__intro">
+        <h2 class="makers__title">Meet<br />the makers</h2>
+        <div class="makers__copy">
+          <p>Sky Forge is more than a platform, it's a pilot-first community.</p>
+          <p>We started by delivering high-quality resources like flight training guides and educational infographics.</p>
+          <p>Today, we're expanding to solve one of aviation's biggest challenges: access to mental and physical health support without fear of professional repercussions.</p>
+          <p>Our secure, anonymous application acts as a trusted bridge: pilots submit forms privately, we ensure full anonymity, and licensed Aviation Medical Examiners provide expert guidance and resources all returned through Sky Forge with zero direct contact.</p>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card__wave" aria-hidden="true"></div>
+        <div class="team-card__head">
+          <div>
+            <span class="team-card__kicker" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5l8 2.5z"/></svg>
+            </span>
+            <h3 class="team-card__title">Meet The<br />Team</h3>
+          </div>
+          <p class="team-card__sub">Meet our innovative strategists crafting impactful campaigns that push boundaries</p>
+        </div>
+
+        <ul class="team">
+          <li class="team__member">
+            <span class="team__photo team__photo--1" aria-hidden="true"></span>
+            <p class="team__name">Iram Tammam</p>
+            <p class="team__role">Creative Manager</p>
+          </li>
+          <li class="team__member">
+            <span class="team__photo team__photo--2" aria-hidden="true"></span>
+            <p class="team__name">Rufus Stewart</p>
+            <p class="team__role">Creative Staff</p>
+          </li>
+          <li class="team__member">
+            <span class="team__photo team__photo--3" aria-hidden="true"></span>
+            <p class="team__name">Margarita Perez</p>
+            <p class="team__role">Creative Staff</p>
+          </li>
+        </ul>
+        <p class="team-card__company">Ingoude Company</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="contact" id="contact">
+    <div class="container contact__grid">
+      <h2 class="contact__title">Contact</h2>
+      <div class="contact__details">
+        <div class="contact__item">
+          <p class="contact__label">Phone</p>
+          <a class="contact__value" href="tel:+11234567890">(123) 456 7890</a>
+        </div>
+        <div class="contact__item">
+          <p class="contact__label">Email</p>
+          <a class="contact__value" href="mailto:hello@skyforge.com">hello@skyforge.com</a>
+        </div>
+        <div class="contact__item">
+          <p class="contact__label">Social</p>
+          <div class="contact__social">
+            <a href="#" aria-label="Sky Forge on Facebook">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M15 8h-2.5c-.5 0-1 .4-1 1v2H15l-.5 3h-3v8h-3v-8H6v-3h2.5V8.2C8.5 5.6 10 4 12.5 4H15v4z"/></svg>
+            </a>
+            <a href="#" aria-label="Sky Forge on Instagram">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <span class="brand brand--footer">
+        <span class="brand__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L11 19v-5.5l8 2.5z"/></svg>
+        </span>
+        <span class="brand__name">Sky Forge</span>
+      </span>
+      <p>© <span id="year"></span> Sky Forge — Strong Minds. Safe Skies.</p>
+    </div>
+  </footer>
+
+  <script src="background.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
