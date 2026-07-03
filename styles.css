@@ -45,6 +45,8 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
+img { max-width: 100%; }
+
 .container {
   width: 100%;
   max-width: var(--maxw);
@@ -154,6 +156,7 @@ a { color: inherit; text-decoration: none; }
 .hero__inner > * { margin: 0; }
 
 .hero__logo {
+  width: 92px;                        /* fallback for browsers without clamp() */
   width: clamp(66px, 9vw, 96px);
   height: auto;
   border-radius: 50%;

@@ -5,9 +5,10 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Touch browsers (esp. iOS Safari) report scroll position in coarse bursts
-  // during momentum/rubber-band scrolling — ease the field there for smoothness.
-  const smoothScroll = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+  // The animated field is desktop-only. On touch devices (phones/tablets) mobile
+  // browsers report scroll in coarse bursts that make it jump around, so we skip
+  // the canvas entirely and just show the plain dark navy background.
+  const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
   const NAVY = '#05070f';
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -132,13 +133,7 @@
 
   let raf = null;
   function frame(now) {
-    const target = window.scrollY || window.pageYOffset || 0;
-    if (smoothScroll) {
-      scrollTop += (target - scrollTop) * 0.2;      // ease coarse mobile bursts
-      if (Math.abs(target - scrollTop) < 0.5) scrollTop = target;
-    } else {
-      scrollTop = target;                           // desktop stays exactly 1:1
-    }
+    scrollTop = window.scrollY || window.pageYOffset || 0;
     ctx.fillStyle = NAVY;
     ctx.fillRect(0, 0, W, H);
 
@@ -165,6 +160,11 @@
   }
   function stop() {
     if (raf) { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  if (isTouch) {
+    canvas.style.display = 'none';   // plain navy background on touch devices
+    return;
   }
 
   window.addEventListener('resize', resize);
