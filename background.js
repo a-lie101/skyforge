@@ -5,10 +5,6 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // The animated field is desktop-only. On touch devices (phones/tablets) mobile
-  // browsers report scroll in coarse bursts that make it jump around, so we skip
-  // the canvas entirely and just show the plain dark navy background.
-  const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
 
   const NAVY = '#05070f';
   const rand = (a, b) => a + Math.random() * (b - a);
@@ -160,11 +156,6 @@
   }
   function stop() {
     if (raf) { cancelAnimationFrame(raf); raf = null; }
-  }
-
-  if (isTouch) {
-    canvas.style.display = 'none';   // plain navy background on touch devices
-    return;
   }
 
   window.addEventListener('resize', resize);
