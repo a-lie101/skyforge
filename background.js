@@ -5,11 +5,14 @@
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Touch browsers (esp. iOS Safari) report scroll position in coarse bursts
+  // during momentum/rubber-band scrolling — ease the field there for smoothness.
+  const smoothScroll = window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
 
   const NAVY = '#05070f';
   const rand = (a, b) => a + Math.random() * (b - a);
 
-  let W = 0, H = 0, DPR = 1, worldH = 0, scrollTop = 0;
+  let W = 0, H = 0, DPR = 1, worldH = 0, scrollTop = 0, lastW = -1;
   function resize() {
     DPR = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth;
@@ -20,7 +23,9 @@
     canvas.style.width = W + 'px';
     canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    makeBubbles();
+    // Only re-seed when width actually changes. Mobile browsers fire resize when
+    // the URL bar shows/hides (height-only) — reshuffling then causes a flash.
+    if (W !== lastW || bubbles.length === 0) { lastW = W; makeBubbles(); }
   }
 
   /* ---------------- Bubbles ---------------- */
@@ -127,7 +132,13 @@
 
   let raf = null;
   function frame(now) {
-    scrollTop = window.scrollY || window.pageYOffset || 0;
+    const target = window.scrollY || window.pageYOffset || 0;
+    if (smoothScroll) {
+      scrollTop += (target - scrollTop) * 0.2;      // ease coarse mobile bursts
+      if (Math.abs(target - scrollTop) < 0.5) scrollTop = target;
+    } else {
+      scrollTop = target;                           // desktop stays exactly 1:1
+    }
     ctx.fillStyle = NAVY;
     ctx.fillRect(0, 0, W, H);
 
