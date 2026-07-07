@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sky Forge — Confidential Pilot Support</title>
+  <meta name="description" content="Submit a confidential wellbeing concern and receive support guidance or referral information. Sky Forge is not an emergency, diagnostic or licensing service." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="../assets/logo-256.png" type="image/png" />
+  <link rel="stylesheet" href="app.css?v=1" />
+</head>
+<body>
+  <canvas id="bg" class="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ===================== APP NAV ===================== -->
+  <header class="appnav">
+    <a class="brand" href="../index.html" aria-label="Sky Forge home">
+      <img class="brand__logo" src="../assets/logo.png" alt="" aria-hidden="true" width="34" height="34" />
+      <span class="brand__name">Sky Forge</span>
+    </a>
+    <div class="appnav__session" id="nav-session" hidden>
+      <span class="appnav__code" id="nav-code" title="Your private case access code"></span>
+      <button class="btn btn--ghost btn--sm" id="btn-signout" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <main class="shell">
+
+    <!-- ===================== WELCOME ===================== -->
+    <section class="screen" id="screen-welcome">
+      <div class="panel panel--center">
+        <img class="panel__logo" src="../assets/logo.png" alt="Sky Forge logo" width="72" height="72" />
+        <h1 class="panel__title">Confidential pilot support</h1>
+        <p class="panel__lede">
+          Sky Forge gives pilots a safer way to raise wellbeing concerns early and
+          receive support guidance or referral information — without involving your
+          employer in individual reports.
+        </p>
+        <div class="panel__actions">
+          <button class="btn btn--primary" id="btn-start-intake" type="button">Start confidential intake</button>
+          <button class="btn btn--ghost" id="btn-goto-login" type="button">Sign in with your case code</button>
+        </div>
+        <p class="smallprint">
+          Sky Forge is a confidential wellbeing navigation and referral platform.
+          It does not diagnose, treat, prescribe, respond to emergencies or make
+          aviation licensing decisions.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== PARTNER ACCESS CODE ===================== -->
+    <section class="screen" id="screen-access" hidden>
+      <div class="panel">
+        <p class="panel__step">Step 1 of 4</p>
+        <h1 class="panel__title">Partner access</h1>
+        <p class="panel__lede">
+          Access to this pilot programme is provided through
+          <span id="access-partner-name">our launch partner</span>. Enter the
+          one-time access code you were given. The code only confirms eligibility —
+          it is kept separate from anything you submit and is never attached to
+          your report.
+        </p>
+        <form id="form-access" novalidate>
+          <label class="field">
+            <span class="field__label">Access code</span>
+            <input class="field__input field__input--code" id="input-partner-code"
+                   type="text" autocomplete="off" autocapitalize="characters"
+                   spellcheck="false" placeholder="e.g. DHL-XXXX" required />
+          </label>
+          <p class="field__error" id="error-partner-code" hidden></p>
+          <div class="panel__actions">
+            <button class="btn btn--primary" type="submit">Continue</button>
+            <button class="btn btn--ghost" type="button" data-goto="welcome">Back</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== CONFIDENTIALITY ===================== -->
+    <section class="screen" id="screen-confidentiality" hidden>
+      <div class="panel">
+        <p class="panel__step" id="conf-step">Step 2 of 4</p>
+        <h1 class="panel__title">Before you continue</h1>
+        <div class="notice notice--warn">
+          <p>
+            <strong>Sky Forge is not an emergency service.</strong> If you are in
+            immediate danger, at risk of harming yourself or someone else, or
+            require urgent medical assistance, please contact local emergency
+            services or go to the nearest emergency department.
+          </p>
+        </div>
+        <p class="panel__lede">
+          Sky Forge does not diagnose, treat, prescribe or make aviation licensing
+          decisions. This platform helps you submit a confidential wellbeing
+          concern and receive support guidance or referral information.
+        </p>
+        <div class="boundaries">
+          <div class="boundaries__col">
+            <h2>Sky Forge does</h2>
+            <ul>
+              <li>Provide a confidential, privacy-first intake pathway</li>
+              <li>Route your concern to a clinical review pathway</li>
+              <li>Return support guidance, resources or referral information</li>
+              <li>Protect identifying details wherever possible</li>
+            </ul>
+          </div>
+          <div class="boundaries__col">
+            <h2>Sky Forge does not</h2>
+            <ul>
+              <li>Diagnose, treat or prescribe</li>
+              <li>Replace emergency services or urgent medical care</li>
+              <li>Determine fitness to fly or make licensing decisions</li>
+              <li>Share individual reports with your employer</li>
+            </ul>
+          </div>
+        </div>
+        <form id="form-confidentiality" novalidate>
+          <label class="check">
+            <input type="checkbox" id="check-ack" required />
+            <span>I understand and want to continue.</span>
+          </label>
+          <p class="field__error" id="error-ack" hidden></p>
+          <div class="panel__actions">
+            <button class="btn btn--primary" type="submit">Continue</button>
+            <button class="btn btn--ghost" type="button" id="btn-conf-back">Back</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== CASE CREDENTIAL ===================== -->
+    <section class="screen" id="screen-credential" hidden>
+      <div class="panel">
+        <p class="panel__step">Step 3 of 4</p>
+        <h1 class="panel__title">Your private access code</h1>
+        <p class="panel__lede">
+          This code is how you return to check your response. It is not linked to
+          your name, employee number or work email.
+        </p>
+        <div class="codebox">
+          <span class="codebox__code" id="generated-code"></span>
+          <button class="btn btn--ghost btn--sm" id="btn-copy-code" type="button">Copy</button>
+        </div>
+        <div class="notice notice--warn">
+          <p>
+            <strong>Save this code somewhere private now.</strong> To protect your
+            privacy, Sky Forge cannot recover or restore lost access codes.
+          </p>
+        </div>
+        <form id="form-credential" novalidate>
+          <label class="field">
+            <span class="field__label">Optional passphrase <em>(adds a second check when signing in)</em></span>
+            <input class="field__input" id="input-passphrase" type="text"
+                   autocomplete="off" placeholder="Leave blank for none" />
+          </label>
+          <label class="check">
+            <input type="checkbox" id="check-saved" required />
+            <span>I have saved my access code.</span>
+          </label>
+          <p class="field__error" id="error-saved" hidden></p>
+          <div class="panel__actions">
+            <button class="btn btn--primary" type="submit">Continue to intake</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== PILOT SIGN IN ===================== -->
+    <section class="screen" id="screen-login" hidden>
+      <div class="panel">
+        <h1 class="panel__title">Sign in</h1>
+        <p class="panel__lede">
+          Enter the private case access code you saved when you first submitted a
+          report.
+        </p>
+        <form id="form-login" novalidate>
+          <label class="field">
+            <span class="field__label">Case access code</span>
+            <input class="field__input field__input--code" id="input-login-code"
+                   type="text" autocomplete="off" autocapitalize="characters"
+                   spellcheck="false" placeholder="SF-XXXX-XXXX" required />
+          </label>
+          <label class="field">
+            <span class="field__label">Passphrase <em>(if you set one)</em></span>
+            <input class="field__input" id="input-login-pass" type="password"
+                   autocomplete="off" placeholder="Leave blank if none" />
+          </label>
+          <p class="field__error" id="error-login" hidden></p>
+          <div class="panel__actions">
+            <button class="btn btn--primary" type="submit">Sign in</button>
+            <button class="btn btn--ghost" type="button" data-goto="welcome">Back</button>
+          </div>
+        </form>
+        <p class="smallprint">
+          Lost your code? To protect your privacy, Sky Forge cannot restore lost
+          access codes. You can start a new confidential intake instead.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== INBOX ===================== -->
+    <section class="screen screen--wide" id="screen-inbox" hidden>
+      <div class="inbox__head">
+        <div>
+          <h1 class="panel__title">Your reports</h1>
+          <p class="panel__lede">
+            Reports are reviewed through a clinical pathway. Responses usually
+            arrive <span id="inbox-response-time">soon</span>.
+          </p>
+        </div>
+        <button class="btn btn--primary" id="btn-new-report" type="button">New report</button>
+      </div>
+      <div class="inbox__list" id="inbox-list"></div>
+      <p class="smallprint smallprint--center">
+        If you are in immediate danger, contact local emergency services — Sky Forge
+        is not an emergency service.
+      </p>
+    </section>
+
+    <!-- ===================== CASE DETAIL ===================== -->
+    <section class="screen screen--wide" id="screen-case" hidden>
+      <button class="btn btn--ghost btn--sm" id="btn-case-back" type="button">&larr; Back to your reports</button>
+      <div class="panel panel--case">
+        <div class="case__head">
+          <div>
+            <h1 class="panel__title case__id" id="case-id"></h1>
+            <p class="case__meta" id="case-meta"></p>
+          </div>
+          <span class="badge" id="case-status"></span>
+        </div>
+
+        <div class="case__block" id="case-response-block" hidden>
+          <h2 class="case__blocktitle">Clinical-reviewed response</h2>
+          <p class="case__meta" id="case-response-meta"></p>
+          <p class="case__text" id="case-response-text"></p>
+          <div id="case-resources"></div>
+          <p class="smallprint">
+            This response is support guidance only. It is not a diagnosis,
+            treatment, prescription or licensing decision.
+          </p>
+        </div>
+
+        <div class="case__block" id="case-pending-block" hidden>
+          <h2 class="case__blocktitle">Awaiting clinical review</h2>
+          <p class="case__text" id="case-pending-text"></p>
+        </div>
+
+        <details class="case__block case__details">
+          <summary>What you submitted</summary>
+          <dl class="summary" id="case-intake-summary"></dl>
+        </details>
+      </div>
+    </section>
+
+    <!-- ===================== URGENT ===================== -->
+    <section class="screen" id="screen-urgent" hidden>
+      <div class="panel panel--urgent">
+        <h1 class="panel__title">Please seek urgent help now</h1>
+        <p class="panel__lede">
+          You said you may be in immediate danger, at risk of harming yourself or
+          someone else, or in need of urgent medical assistance.
+        </p>
+        <div class="notice notice--urgent">
+          <p>
+            <strong>Sky Forge is not an emergency service and cannot send help.</strong>
+            Please contact local emergency services or go to the nearest emergency
+            department now. If you can, tell someone nearby that you need support.
+          </p>
+        </div>
+        <p class="panel__lede">
+          You can still submit your report — it will be flagged for priority
+          review — but submitting it is not a way of requesting emergency help.
+        </p>
+        <div class="panel__actions">
+          <button class="btn btn--primary" id="btn-urgent-continue" type="button">I understand — continue with my report</button>
+          <button class="btn btn--ghost" id="btn-urgent-back" type="button">Go back</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== INTAKE FORM ===================== -->
+    <section class="screen" id="screen-intake" hidden>
+      <div class="panel">
+        <p class="panel__step" id="intake-step">Step 4 of 4</p>
+        <h1 class="panel__title">Confidential intake</h1>
+        <p class="panel__lede">
+          Answer as much or as little as you like. Only the first question and the
+          final confirmation are required.
+        </p>
+        <form id="form-intake" novalidate>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">Are you in immediate danger, at risk of harming yourself or someone else, or in need of urgent medical assistance?</legend>
+            <div class="chips" id="chips-emergency">
+              <label class="chip"><input type="radio" name="emergency" value="Yes" required /><span>Yes</span></label>
+              <label class="chip"><input type="radio" name="emergency" value="No" required /><span>No</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">What would you like support with today?</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="category" value="Stress / anxiety" /><span>Stress / anxiety</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Low mood" /><span>Low mood</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Fatigue / sleep" /><span>Fatigue / sleep</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Isolation / loneliness" /><span>Isolation / loneliness</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Alcohol / substance concern" /><span>Alcohol / substance concern</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Physical wellbeing" /><span>Physical wellbeing</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Roster / work pressure" /><span>Roster / work pressure</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Certification / licensing worry" /><span>Certification / licensing worry</span></label>
+              <label class="chip"><input type="checkbox" name="category" value="Other" /><span>Other</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">In your own words, what has been going on?</legend>
+            <textarea class="field__input field__textarea" name="concernText" rows="5"
+                      placeholder="Write as much as you feel comfortable sharing."></textarea>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">How long has this been affecting you?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="duration" value="Days" /><span>Days</span></label>
+              <label class="chip"><input type="radio" name="duration" value="1–2 weeks" /><span>1–2 weeks</span></label>
+              <label class="chip"><input type="radio" name="duration" value="2–4 weeks" /><span>2–4 weeks</span></label>
+              <label class="chip"><input type="radio" name="duration" value="1–3 months" /><span>1–3 months</span></label>
+              <label class="chip"><input type="radio" name="duration" value="Longer than 3 months" /><span>Longer than 3 months</span></label>
+              <label class="chip"><input type="radio" name="duration" value="Unsure" /><span>Unsure</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">How difficult has this been to manage recently?</legend>
+            <div class="slider">
+              <input type="range" name="severity" min="0" max="10" step="1" value="5" id="input-severity" />
+              <output class="slider__value" id="severity-value">5</output>
+            </div>
+            <p class="qgroup__hint">0 = not difficult &nbsp;·&nbsp; 10 = extremely difficult</p>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">Is this affecting any of the following?</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="impact" value="Sleep" /><span>Sleep</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Concentration" /><span>Concentration</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Mood" /><span>Mood</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Relationships" /><span>Relationships</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Training" /><span>Training</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Work" /><span>Work</span></label>
+              <label class="chip"><input type="checkbox" name="impact" value="Daily routines" /><span>Daily routines</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">How has your sleep or fatigue been recently?</legend>
+            <textarea class="field__input field__textarea" name="sleep" rows="2"
+                      placeholder="Optional"></textarea>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">Are you concerned about alcohol, medication or substance use?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="substance" value="No" /><span>No</span></label>
+              <label class="chip"><input type="radio" name="substance" value="Yes — alcohol" /><span>Yes — alcohol</span></label>
+              <label class="chip"><input type="radio" name="substance" value="Yes — medication" /><span>Yes — medication</span></label>
+              <label class="chip"><input type="radio" name="substance" value="Yes — other" /><span>Yes — other</span></label>
+              <label class="chip"><input type="radio" name="substance" value="Prefer not to say" /><span>Prefer not to say</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">Are there physical symptoms or health concerns you want to mention?</legend>
+            <textarea class="field__input field__textarea" name="physical" rows="2"
+                      placeholder="Optional"></textarea>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <legend class="qgroup__q">What would be most helpful right now?</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="preferred" value="Resources" /><span>Resources</span></label>
+              <label class="chip"><input type="checkbox" name="preferred" value="Clinical-reviewed guidance" /><span>Clinical-reviewed guidance</span></label>
+              <label class="chip"><input type="checkbox" name="preferred" value="Referral information" /><span>Referral information</span></label>
+              <label class="chip"><input type="checkbox" name="preferred" value="Follow-up questions" /><span>Follow-up questions</span></label>
+              <label class="chip"><input type="checkbox" name="preferred" value="Not sure" /><span>Not sure</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="qgroup">
+            <label class="check">
+              <input type="checkbox" id="check-consent" required />
+              <span>I understand Sky Forge is not an emergency, diagnosis, treatment, prescribing or licensing service.</span>
+            </label>
+          </fieldset>
+
+          <p class="field__error" id="error-intake" hidden></p>
+          <div class="panel__actions">
+            <button class="btn btn--primary" type="submit">Review my report</button>
+            <button class="btn btn--ghost" type="button" id="btn-intake-cancel">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== REVIEW & SUBMIT ===================== -->
+    <section class="screen" id="screen-review" hidden>
+      <div class="panel">
+        <h1 class="panel__title">Review &amp; submit</h1>
+        <p class="panel__lede">
+          Check your report before sending it for clinical review.
+        </p>
+        <dl class="summary" id="review-summary"></dl>
+        <div class="panel__actions">
+          <button class="btn btn--primary" id="btn-submit-report" type="button">Submit report</button>
+          <button class="btn btn--ghost" id="btn-edit-report" type="button">Edit</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONFIRMATION ===================== -->
+    <section class="screen" id="screen-confirmation" hidden>
+      <div class="panel panel--center">
+        <div class="confirm__tick" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12.5l5 5L20 7"/></svg>
+        </div>
+        <h1 class="panel__title">Report submitted</h1>
+        <p class="panel__lede">
+          Your report <strong id="confirm-case-id"></strong> has been placed in the
+          clinical review queue. A response is usually available
+          <span id="confirm-response-time">soon</span>.
+        </p>
+        <div class="notice notice--warn">
+          <p>
+            Sign back in with your case access code
+            <strong id="confirm-access-code"></strong> to check your response.
+            Keep it saved somewhere private — it cannot be recovered.
+          </p>
+        </div>
+        <div class="panel__actions">
+          <button class="btn btn--primary" id="btn-confirm-inbox" type="button">Go to your reports</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="appfooter">
+    <p>
+      © <span id="year"></span> Sky Forge — confidential wellbeing navigation and
+      referral. Not an emergency service. In immediate danger? Contact local
+      emergency services.
+    </p>
+  </footer>
+
+  <script src="../background.js?v=3"></script>
+  <script src="demo-data.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>
